@@ -1,0 +1,10 @@
+[project]
+name = "dbrowser"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "cefpython3>=66.1",
+    "pywebview>=6.0",
+]
