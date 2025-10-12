@@ -85,17 +85,17 @@ class MainWindow(QMainWindow):
 
 
 class PaddedWindow(QWidget):
-    def __init__(self, widget, navbar, tab, color):
+    def __init__(self, widget, color):
         super().__init__()
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self.setStyleSheet(f"background-color: {color}; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;")
         
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(20, 20, 20, 20)
-        layout.setSpacing(10)
+        layout.setContentsMargins(20, 10, 20, 20)
+        layout.setSpacing(0)
         
-        layout.addWidget(navbar)
-        layout.addWidget(tab)
+        #layout.addWidget(tab)
+        #layout.addWidget(navbar)
         layout.addWidget(widget)
         
         
