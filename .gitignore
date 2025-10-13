@@ -8,3 +8,5 @@ wheels/
 
 # Virtual environments
 .venv
+Desktop/user_cache/
+Desktop/user_data/

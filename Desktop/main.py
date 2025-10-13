@@ -28,7 +28,8 @@ tab_manager = TabManager()
 CentralWidget = PaddedWindow(tab_manager,"#181826")
 
 # Create main window with blue title bar
-window = MainWindow(CentralWidget)
+window = MainWindow(CentralWidget,tab_manager)
+
 
 window.show()
 sys.exit(app.exec())

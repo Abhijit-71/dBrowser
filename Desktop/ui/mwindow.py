@@ -2,7 +2,7 @@ from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout
 )
 from PyQt6.QtCore import Qt, QPoint
-from PyQt6.QtGui import  QIcon ,  QPixmap
+from PyQt6.QtGui import  QIcon ,  QPixmap, QResizeEvent
 import sys
 from .coreui import HoverButton
 
@@ -66,12 +66,14 @@ class CustomTitleBar(QWidget):
 
         
 class MainWindow(QMainWindow):
-    def __init__(self, widget):
+    def __init__(self, widget,tab_manager):
         super().__init__()
         self.setWindowTitle('dBrowser')
         self.setWindowFlags(Qt.WindowType.CustomizeWindowHint)
         self.setMinimumSize(800, 600)
 
+        self.TabBar = tab_manager
+        
         central = QWidget()
         layout = QVBoxLayout(central)
         layout.setContentsMargins(0, 0, 0, 0)
@@ -82,7 +84,18 @@ class MainWindow(QMainWindow):
         layout.addWidget(widget)
         
         self.setCentralWidget(central)
+    
+    """def resizeEvent(self,event):
+        super().resizeEvent(event)
 
+        # Check if window is maximized
+        if self.windowState() & Qt.WindowState.WindowMaximized:
+            if not self.was_maximized:
+                self.was_maximized = True
+                print(self.TabBar.width())
+                self.TabBar.TabBar.tabBar().setFixedWidth(200)  # call your function
+        else:
+            self.was_maximized = False""" #calling resize event to adjust width 
 
 class PaddedWindow(QWidget):
     def __init__(self, widget, color):
