@@ -22,12 +22,21 @@ Opens **Google.com** by default and provides basic navigation controls in a clea
 
 ---
 
+## Demo of Browser
+
+![Alt text](Demo/image-1.png)
+![Alt text](Demo/image-2.png)
+===============================
+![Alt text](Demo/demo-gif.gif)
+
+
+
 ## 🚀 Getting Started
 
 1. Clone the repository:
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Abhijit-71/dBrowser.git
 cd dBrowser
 ```
 
@@ -39,7 +48,11 @@ uv install
 
 3. Run the browser:
 
+for windows --
+
 ```bash
+cd Desktop
+..\.venv\Scripts\activate.ps1
 uv run main.py
 ```
 
