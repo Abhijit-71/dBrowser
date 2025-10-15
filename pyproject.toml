@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "kivy[base]>=2.3.1",
     "pyqt6>=6.5.0",
     "pyqt6-webengine>=6.5.0",
 ]
