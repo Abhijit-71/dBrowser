@@ -1,3 +1,5 @@
+#entry point of app main window
+
 import platform 
 import os
 
@@ -11,18 +13,20 @@ IS_ANDROID = platform.system() == "Linux" and "ANDROID_ROOT" in os.environ  #che
 print(IS_ANDROID)
 
 if IS_ANDROID:
-    pass
+    from browser import Browser
+    browser = Browser().webview
 else:
-    from browser import demoBrowser 
+    from browser import demoBrowser
+    browser = demoBrowser().webview
 
-Window.clearcolor = (0.15, 0.15, 0.15, 1)
+Window.clearcolor = (14/255, 15/255, 25/255 ,1)
 Window.size = (320,640)
 Window.resizable = True
 
 class Main(App):
     def build(self):
         toolbar = ToolBar(size=((1,0.05)))
-        return MainWindow(toolbar)
+        return MainWindow(toolbar,browser)
         
 
 

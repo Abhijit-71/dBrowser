@@ -1,9 +1,13 @@
+#for toolbar and all buttons
+
+
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.uix.image import Image
 from kivy.graphics import Color , RoundedRectangle
+#from kivy
 
 
 class ToolBar(BoxLayout):
@@ -11,15 +15,19 @@ class ToolBar(BoxLayout):
         super().__init__()
         self.orientation = "horizontal"
         self.size_hint = size
-        self.spacing = 5
+        self.spacing = 10
         self.padding = 2
-        self.add_widget(Image(source='svg/google_logo.png', allow_stretch=True, keep_ratio=True ,size_hint=(0.05, 0.9)))
-        self.add_widget(URLBar())
+        
+        #self.add_widget(Image(source='svg/google_logo.svg', allow_stretch=True, keep_ratio=True ,size_hint=(0.05, 0.9)))
+        img = AnchorLayout(anchor_y='center')
+        img.add_widget(Image(source='svg/google_logo.png',size_hint=(None, None),size=(30, 30),allow_stretch=True,keep_ratio=True))
+        self.add_widget(img)
+        self.add_widget(URLBar().anchor)
         self.add_widget(img_btn("svg/google_logo.png","svg/google_logo.png"))
         self.add_widget(img_btn("svg/google_logo.png","svg/google_logo.png"))
 
         with self.canvas.before:  # type:ignore
-            Color(0.2, 0.4, 0.6, 0.2)
+            Color(14/255, 15/255, 25/255 ,1)
             self.rect = RoundedRectangle(
                 pos=self.pos,
                 size=self.size,
@@ -41,6 +49,9 @@ class URLBar(TextInput):
         self.multiline = False
         self.size_hint = (0.5, 0.9)
         self.background_color = (0, 0, 0, 0)
+        self.anchor = AnchorLayout(anchor_y='center')
+        self.anchor.add_widget(self)
+    
 
         with self.canvas.before:  # type:ignore
             Color(0.2, 0.4, 0.6, 0.2)
@@ -66,4 +77,5 @@ class img_btn(Button):
         self.border = (0, 0, 0, 0)
         self.size_hint = (None, 1) 
         self.width = 40
+
         
