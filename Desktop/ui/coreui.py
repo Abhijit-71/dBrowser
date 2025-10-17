@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QPushButton
+from PyQt6.QtWidgets import QPushButton ,QProgressBar
 from PyQt6.QtGui import QIcon
 from PyQt6.QtCore import QSize
 
@@ -42,3 +42,22 @@ class IconButton(QPushButton):
         self.setIconSize(QSize(size, size))
         self.setFixedSize(size, size)
         self.setFlat(True)
+
+class ProgressBar(QProgressBar):
+    def __init__(self):
+        super().__init__()
+        self.setMaximumHeight(2)
+        self.setTextVisible(False)
+        self.setRange(0, 100)
+        self.hide()  # Hide initially
+
+    def on_load_started(self):
+            self.show()
+            self.setValue(0)
+
+    def on_load_progress(self, progress):
+            self.setValue(progress)
+
+    def on_load_finished(self):
+            self.hide()
+

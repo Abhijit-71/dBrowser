@@ -4,6 +4,7 @@ from PyQt6.QtCore import Qt , QUrl
 from PyQt6.QtWebEngineWidgets import QWebEngineView 
 from PyQt6.QtWebEngineCore import QWebEnginePage , QWebEngineProfile
 import os
+from .coreui import ProgressBar
 
 
 
@@ -19,18 +20,25 @@ class BrowserWindow(QWidget):
             self._shared_profile = self._get_profile_data()
 
         
-            
+          
         browser = QWebEngineView()
+
+        progress = ProgressBar() 
+        browser.loadStarted.connect(progress.on_load_started)
+        browser.loadProgress.connect(progress.on_load_progress)
+        browser.loadFinished.connect(progress.on_load_finished)
+
         browser.setPage(QWebEnginePage(self._shared_profile, browser))
         browser.setUrl(QUrl('https://google.com'))
         navbar = Navigation(browser)
         urlbar = URLTab()
-        toolbar = Toolbar(navbar,urlbar)
+        self.toolbar = Toolbar(navbar,urlbar)
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
         
-        layout.addWidget(toolbar)
+        layout.addWidget(self.toolbar)
+        layout.addWidget(progress)
         layout.addWidget(browser)
     
     def _get_profile_data(self):

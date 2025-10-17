@@ -7,6 +7,7 @@ import sys
 from ui.tabbar import TabManager
 from ui.browser import BrowserWindow
 
+
 """app = QApplication(sys.argv)
 browser = QWebEngineView()
 browser.setUrl(QUrl('https://google.com'))

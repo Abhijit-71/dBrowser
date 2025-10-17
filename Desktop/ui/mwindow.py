@@ -104,7 +104,7 @@ class PaddedWindow(QWidget):
         self.setStyleSheet(f"background-color: {color}; border-bottom-left-radius: 8px; border-bottom-right-radius: 8px;")
         
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(20, 10, 20, 20)
+        layout.setContentsMargins(10, 5, 10, 10)
         layout.setSpacing(0)
         
         #layout.addWidget(tab)

@@ -1,8 +1,9 @@
-from PyQt6.QtWidgets import QWidget, QLabel, QHBoxLayout , QLineEdit , QSizePolicy
+from PyQt6.QtWidgets import QWidget, QLabel, QHBoxLayout , QLineEdit , QSizePolicy , QSpacerItem
 from PyQt6.QtWebEngineWidgets import QWebEngineView
 from PyQt6.QtCore import Qt ,QSize
 from .coreui import HoverButton , IconButton
 from PyQt6.QtGui import QIcon , QPixmap
+
 
 class Navigation(QWidget):
     def __init__(self, browser:QWebEngineView):
@@ -10,18 +11,18 @@ class Navigation(QWidget):
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         
         layout = QHBoxLayout(self)
-        layout.setContentsMargins(15, 8, 15, 8)
-        layout.setSpacing(8)
+        layout.setContentsMargins(50, 8, 0, 8)
+        layout.setSpacing(10)
 
-        self.back = IconButton('svg/back.svg', 25)
+        self.back = IconButton('svg/back.svg', 20)
         self.back.clicked.connect(browser.back)
         layout.addWidget(self.back)
 
-        self.forward = IconButton('svg/forward.svg', 25)
+        self.forward = IconButton('svg/forward.svg', 20)
         self.forward.clicked.connect(browser.forward)
         layout.addWidget(self.forward)
 
-        self.reload = IconButton('svg/reload.svg', 25)
+        self.reload = IconButton('svg/reload.svg', 20)
         self.reload.clicked.connect(browser.reload)
         layout.addWidget(self.reload)
 
@@ -33,7 +34,7 @@ class URLTab(QWidget):
         super().__init__()
         layout = QHBoxLayout(self)
         layout.setContentsMargins(0,0,0,0)
-        layout.setSpacing(8)
+        layout.setSpacing(6)
         layout.addStretch()
 
         self.sengine = QLabel()
@@ -46,15 +47,17 @@ class URLTab(QWidget):
 
         self.urlbox = QLineEdit()
         self.urlbox.setFixedHeight(35)
-        self.urlbox.setMinimumWidth(250)
+        self.urlbox.setMinimumWidth(200)
+        self.urlbox.setMaximumWidth(1200)
         self.urlbox.setPlaceholderText("Search with google or enter url .....")
         line_style = """
             QLineEdit {
                 background: rgba(255,255,255,0.1);
                 color: #ffffff;
                 border: 1px solid rgba(255,255,255,0.06);
-                padding: 10px 6px;
-                border-radius: 4px;
+                padding: 4px 8px;
+                border-radius: 8px;
+                font-size: 12px;
             }
             QLineEdit:focus {
                 border: 1px solid #6aaaff;
@@ -76,12 +79,34 @@ class Toolbar(QWidget):
     def __init__(self, navbar, urltab, color="#47327D"):
         super().__init__()
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+
+        self.home = IconButton('svg/home_tab.svg', 22)
+
+        self.menu = IconButton('svg/menu.svg', 22)
+        self.download = IconButton('svg/download.svg', 22)
+         
+        menu_layout = QHBoxLayout()
+        menu_layout.setContentsMargins(100,0,0,0)
+        menu_layout.setSpacing(30)
+        menu_layout.addWidget(self.download)
+        menu_layout.addWidget(self.menu)
+        
+        url_layout = QHBoxLayout()
+        url_layout.setContentsMargins(0,0,0,0)
+        url_layout.setSpacing(10)
+        url_layout.addWidget(navbar)
+        url_layout.addWidget(urltab)
+
+
         layout = QHBoxLayout(self)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(50)
-        layout.addWidget(navbar)
-        layout.addWidget(urltab)
-        layout.addStretch()
+        layout.setContentsMargins(20,0,20,0)
+        layout.setSpacing(30)
+        layout.addWidget(self.home)
+        
+        
+        layout.addLayout(url_layout)
+        layout.addLayout(menu_layout)
+        
         
         self.setStyleSheet(f"background-color: {color};border-radius: 0px;border-top-right-radius: 8px;")
         self.setFixedHeight(45)
