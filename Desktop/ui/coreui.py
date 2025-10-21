@@ -43,13 +43,15 @@ class IconButton(QPushButton):
         self.setFixedSize(size, size)
         self.setFlat(True)
 
+        
+
 class ProgressBar(QProgressBar):
     def __init__(self):
         super().__init__()
         self.setMaximumHeight(2)
         self.setTextVisible(False)
         self.setRange(0, 100)
-        self.hide()  # Hide initially
+        self.hide()
 
     def on_load_started(self):
             self.show()

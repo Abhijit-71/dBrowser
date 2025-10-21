@@ -1,4 +1,4 @@
-from PyQt6.QtWebEngineWidgets import QWebEngineView
+from PyQt6.QtWebEngineCore import QWebEngineGlobalSettings
 from PyQt6.QtWidgets import QApplication , QMainWindow , QVBoxLayout
 from PyQt6.QtCore import QUrl
 from ui.mwindow import MainWindow , PaddedWindow
@@ -21,6 +21,14 @@ window = MainWindow(boom)
 
 window.show()
 app.exec()"""
+
+dns_config = [
+    '--enable-features=DnsOverHttps',
+    '--dns-over-https-servers=https://185.228.168.168/dns-query',
+]
+
+sys.argv.extend(dns_config)
+# Apply the DNS mode globally
 
 app = QApplication(sys.argv)
 

@@ -1,8 +1,9 @@
 from PyQt6.QtWidgets import QWidget, QLabel, QHBoxLayout , QLineEdit , QSizePolicy , QSpacerItem
 from PyQt6.QtWebEngineWidgets import QWebEngineView
-from PyQt6.QtCore import Qt ,QSize
+from PyQt6.QtCore import Qt ,QSize,QUrl
 from .coreui import HoverButton , IconButton
 from PyQt6.QtGui import QIcon , QPixmap
+from urllib.parse import quote_plus
 
 
 class Navigation(QWidget):
@@ -29,8 +30,10 @@ class Navigation(QWidget):
         self.setFixedHeight(45)
 
 
+
+
 class URLTab(QWidget):
-    def __init__(self,color="#256eff"):
+    def __init__(self,browser:QWebEngineView,color="#256eff"):
         super().__init__()
         layout = QHBoxLayout(self)
         layout.setContentsMargins(0,0,0,0)
@@ -72,6 +75,18 @@ class URLTab(QWidget):
         layout.addWidget(self.urlbox,1)
         self.setStyleSheet(f"background-color: {color};")
         self.setFixedHeight(45)
+        self.browser = browser
+        self.urlbox.returnPressed.connect(lambda: self.change_src(self.urlbox.text()))
+
+    def change_src(self,src:str):
+        if src.startswith('https://') or src.startswith('http://'):
+            self.browser.setUrl(QUrl(src))
+        else:
+            query = quote_plus(src)
+            url = f"https://www.google.com/search?q={query}"
+            self.browser.setUrl(QUrl(url))
+        
+        
 
 
 

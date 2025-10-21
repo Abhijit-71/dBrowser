@@ -1,32 +1,30 @@
 #entry point of app main window
 
-import platform 
-import os
-
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.core.window import Window
-from ui import MainWindow
-from toolbar import ToolBar
+from ui import MainWindow , MainScreen
+from toolbar import CustomBar
+from browser import demoBrowser
+from tabmanager import TabBar
 
 
-IS_ANDROID = platform.system() == "Linux" and "ANDROID_ROOT" in os.environ  #checks if android , for development only (ui)
-print(IS_ANDROID)
-
-if IS_ANDROID:
-    from browser import Browser
-    browser = Browser().webview
-else:
-    from browser import demoBrowser
-    browser = demoBrowser().webview
 
 Window.clearcolor = (14/255, 15/255, 25/255 ,1)
 Window.size = (320,640)
 Window.resizable = True
+window = demoBrowser()
 
-class Main(App):
+class Main(MDApp):
     def build(self):
-        toolbar = ToolBar(size=((1,0.05)))
-        return MainWindow(toolbar,browser)
+        #self.theme_cls.theme_style = "Dark"
+        #self.theme_cls.primary_palette = "Purple"  
+        topbar = CustomBar(size=(1,0.1))
+        self.tabbar = TabBar()
+        screen = MainScreen(topbar,window)
+        return MainWindow(self.tabbar,screen)
+    
+    def open_tab_drawer(self):
+        self.tabbar.set_state("toggle") #type:ignore
         
 
 
