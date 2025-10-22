@@ -9,15 +9,15 @@ from tabmanager import TabBar
 
 
 
-Window.clearcolor = (14/255, 15/255, 25/255 ,1)
+Window.clearcolor = (0.7, 0.7, 0.7 ,0.7)
 Window.size = (320,640)
 Window.resizable = True
 window = demoBrowser()
 
 class Main(MDApp):
     def build(self):
-        #self.theme_cls.theme_style = "Dark"
-        #self.theme_cls.primary_palette = "Purple"  
+        self.theme_cls.theme_style = "Dark"
+        self.theme_cls.primary_palette = "Purple"  
         topbar = CustomBar(size=(1,0.1))
         self.tabbar = TabBar()
         screen = MainScreen(topbar,window)

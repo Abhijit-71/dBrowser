@@ -1,6 +1,7 @@
-from kivymd.uix.navigationdrawer import MDNavigationDrawer,MDNavigationDrawerMenu,MDNavigationDrawerLabel
+from kivymd.uix.navigationdrawer import MDNavigationDrawer,MDNavigationDrawerMenu,MDNavigationDrawerItem,MDNavigationDrawerItemText,MDNavigationDrawerLabel
 from kivy.metrics import dp
-from kivymd.uix.menu import MDDropdownMenu
+
+from ui import IconButton,OptionsTabs,DropMenu
 
 
 class TabBar(MDNavigationDrawer):
@@ -13,41 +14,32 @@ class TabBar(MDNavigationDrawer):
         self.width = dp(200)
         
         menu = MDNavigationDrawerMenu()
-        menu.add_widget(MDNavigationDrawerLabel(text="Tab Manager"))
+        menu.spacing = 10
         
+        label = MDNavigationDrawerLabel(text="Tabs")
+        #divider = MDNavigationDrawerDivider()
+        menu.add_widget(label)
+        #menu.add_widget(divider)
+       
+        for x in range(5):
+            items = MDNavigationDrawerItem()
+            items.btn = IconButton("svg/add.png","svg/add.png")
+            items.add_widget(items.btn)
+            items.add_widget(MDNavigationDrawerItemText(text="Tabs",font_size=24))
+            items.opt = OptionsTabs(items.btn)
+            items.height = dp(36)
+            items.md_bg_color = (1,1,1,1)
+            menu.add_widget(items)
+
+        
+        
+
         self.add_widget(menu)
 
-class DropMenu(MDDropdownMenu):
-    def __init__(self,caller_btn, **kwargs):
-        menu_items = [
-            {
-                "text": "Settings",
-                "icon": "cog",
-                "on_release": lambda x="Settings": self.menu_callback(x)
-            },
-            {
-                "text": "Help",
-                "icon": "help-circle",
-                "on_release": lambda x="Help": self.menu_callback(x)
-            },
-            {
-                "text": "Logout",
-                "icon": "logout",
-                "on_release": lambda x="Logout": self.menu_callback(x)
-            },
-        ]
-        super().__init__(**kwargs)
-        self.width = dp(150)
-        self.caller = caller_btn
-        self.items = menu_items
-        self.position = 'bottom'
-        self.ver_growth="down"
-        
-        self.background_color = (1,1,1,1)
-
-        self.caller.bind(on_release=lambda x: self.open())
 
 
-    def menu_callback(self, text_item):
-        print(f"Selected: {text_item}")
-        self.dismiss()
+
+
+
+
+#class NewTabView()

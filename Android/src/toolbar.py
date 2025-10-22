@@ -2,14 +2,9 @@
 from kivy.uix.textinput import TextInput
 from kivymd.app import MDApp
 from kivymd.uix.boxlayout import MDBoxLayout
-from kivymd.uix.floatlayout import MDFloatLayout
-from kivymd.uix.relativelayout import MDRelativeLayout
 from kivymd.uix.label import MDLabel
 from ui import IconButton
-from kivymd.uix.textfield import MDTextField,MDTextFieldHelperText,textfield
-from kivy.uix.image import Image
-from kivy.graphics import Color , RoundedRectangle,Line
-from kivymd.uix.button import MDIconButton
+from kivy.graphics import Color ,Line
 from tabmanager import DropMenu
 from kivy.metrics import dp
 
@@ -19,57 +14,43 @@ class CustomBar(MDBoxLayout):
         super().__init__(**kwargs)
         self.orientation = 'horizontal'
         self.size_hint = size
-        self.height = dp(56)
+        self.height = dp(64)
         self.padding = [10, 10, 10, 10]
-        self.spacing = 10
-        self.md_bg_color = (33/225, 35/225, 56/225, 1)
-        # Left icon
+        self.spacing = 5
+        self.md_bg_color = (14/255, 15/255, 25/255 ,1)
+        
        
         self.add_widget(IconButton(
-            'svg/google_logo.png',
-            'svg/google_logo.png',
+            'svg/home.png',
+            'svg/home_pressed.png',
             on_release = lambda x:MDApp.get_running_app().open_tab_drawer()  #type:ignore
         ))
-        # Title or search field
+        
         self.add_widget(UrlBar())
 
-        """self.add_widget(MDIconButton(
-            icon="numeric-7-box-multiple", #plus-box-multiple
-            theme_icon_color="Custom",
-            icon_color=(1, 1, 1, 1),
-            size_hint=(None, None),
-            font_size=dp(14),
-            on_release = lambda x:MDApp.get_running_app().open_tab_drawer()  #type:ignore
-        ))"""
         self.add_widget(IconButton(
-            'svg/google_logo.png',
-            'svg/google_logo.png',
+            'svg/add.png',
+            'svg/add_pressed.png',
             on_release = lambda x:MDApp.get_running_app().open_tab_drawer()  #type:ignore
         ))
 
-        # Right icon
-        self.btn =IconButton(
-            'svg/google_logo.png',
-            'svg/google_logo.png',
+        self.menu =IconButton(
+            'svg/dots.png',
+            'svg/dots_pressed.png',
         )
         
-        self.add_widget(self.btn)
-        self.dropdown = DropMenu(self.btn)
+        self.add_widget(self.menu)
+        self.dropdown = DropMenu(self.menu)
 
 
 
-class UrlBar(MDTextField):
+class UrlBar(MDBoxLayout):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.mode = 'outlined'
-        self.size_hint = (0.5, None)
-        self.height = dp(32)
+        self.padding = [15,0,30,0]
         self.pos_hint = {"center_y": 0.5}
-        self.radius = [8, 8, 8, 8]
-        self.hint_text = "hi"
-        self.hint_text_color = (1, 1, 1, 0.7)  # White hint text
-        self.fill_color = (1, 1, 1, 1)  # Light background
-        self.text_color = (1, 1, 1, 0.6)  
+        self.add_widget(url())
+        self.size_hint = (0.6, 0.8)
         
 class url(TextInput):
     def __init__(self, **kwargs):
@@ -79,16 +60,10 @@ class url(TextInput):
         self.padding = [10,10,10,10]
         self.pos_hint = {"center_y": 0.5}
         self.hint_text_color = (1,1,1,1)
-        #self.background_color = (67/225,72/225,109/225)
-        self.background_color = (0,0,0,0)
+        self.foreground_color = (1,1,1,1)
+        self.background_active = "False"
+        self.background_normal = "False"
+        self.background_color = (33/255, 35/255, 56/255, 1)
         self.font_size = 16
-        self.size_hint = (0.5, 0.8)
-
-        with self.canvas.before: #type:ignore
-            Color(1, 1, 1, 0.8)
-            self.border_line = Line(rounded_rectangle=(self.x, self.y, self.width, self.height, dp(6)), width=1)
         
-        self.bind(pos=self.update_line, size=self.update_line) #type:ignore
-
-    def update_line(self, *args):
-        self.border_line.rounded_rectangle = (self.x, self.y, self.width, self.height, 10)
+        
