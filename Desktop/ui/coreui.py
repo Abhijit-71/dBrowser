@@ -1,6 +1,7 @@
-from PyQt6.QtWidgets import QPushButton ,QProgressBar
+from PyQt6.QtWidgets import QPushButton ,QProgressBar,QLabel
 from PyQt6.QtGui import QIcon
-from PyQt6.QtCore import QSize
+from PyQt6.QtCore import Qt, QSize
+from PyQt6.QtGui import QIcon
 
 class HoverButton(QPushButton):
     def __init__(self, normal:str, hover:str, pressed:str, size:int, parent=None):
@@ -62,4 +63,3 @@ class ProgressBar(QProgressBar):
 
     def on_load_finished(self):
             self.hide()
-

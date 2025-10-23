@@ -21,27 +21,32 @@ class BrowserWindow(QWidget):
 
         
           
-        browser = QWebEngineView()
+        self.browser = QWebEngineView()
         #browser.setPage(QWebEnginePage(self._shared_profile, browser))
-        browser.setUrl(QUrl('https://google.com'))
+        self.browser.setUrl(QUrl('https://google.com'))
 
 
         progress = ProgressBar() 
-        browser.loadStarted.connect(progress.on_load_started)
-        browser.loadProgress.connect(progress.on_load_progress)
-        browser.loadFinished.connect(progress.on_load_finished)
+        self.browser.loadStarted.connect(progress.on_load_started)
+        self.browser.loadProgress.connect(progress.on_load_progress)
+        self.browser.loadFinished.connect(progress.on_load_finished)
 
         
-        navbar = Navigation(browser)
-        urlbar = URLTab(browser)
-        self.toolbar = Toolbar(navbar,urlbar)
+        navbar = Navigation(self.browser)
+        self.urlbar = URLTab(self.browser)
+        self.toolbar = Toolbar(navbar,self.urlbar)
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
         layout.setSpacing(0)
         layout.addWidget(self.toolbar)
         layout.addWidget(progress)
-        layout.addWidget(browser)
+        layout.addWidget(self.browser)
+
+        self.browser.urlChanged.connect(self.update_urlbox)
+
+    def update_urlbox(self,url):
+        self.urlbar.urlbox.setText(url.toString())
     
     
     def _get_profile_data(self): #earlier all shared same profile and persistent storage
