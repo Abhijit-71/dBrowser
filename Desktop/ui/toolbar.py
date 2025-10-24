@@ -15,15 +15,15 @@ class Navigation(QWidget):
         layout.setContentsMargins(50, 8, 0, 8)
         layout.setSpacing(10)
 
-        self.back = IconButton('svg/back.svg', 20)
+        self.back = HoverButton('svg/back.svg','svg/back_pressed.svg','svg/back_pressed.svg', 20)
         self.back.clicked.connect(browser.back)
         layout.addWidget(self.back)
 
-        self.forward = IconButton('svg/forward.svg', 20)
+        self.forward = HoverButton('svg/forward.svg','svg/forward_pressed.svg','svg/forward_pressed.svg', 20)
         self.forward.clicked.connect(browser.forward)
         layout.addWidget(self.forward)
 
-        self.reload = IconButton('svg/reload.svg', 20)
+        self.reload = HoverButton('svg/reload.svg','svg/reload_pressed.svg','svg/reload_pressed.svg', 19)
         self.reload.clicked.connect(browser.reload)
         layout.addWidget(self.reload)
 
@@ -95,10 +95,10 @@ class Toolbar(QWidget):
         super().__init__()
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
 
-        self.home = IconButton('svg/home_tab.svg', 22)
+        self.home = HoverButton('svg/home_tab.svg','svg/home_tab_pressed.svg','svg/home_tab_pressed.svg', 22)
 
-        self.menu = IconButton('svg/menu.svg', 22)
-        self.download = IconButton('svg/download.svg', 22)
+        self.menu = HoverButton('svg/menu.svg','svg/menu_pressed.svg','svg/menu_pressed.svg', 22)
+        self.download = HoverButton('svg/download.svg','svg/download_pressed.svg','svg/download_pressed.svg', 22)
          
         menu_layout = QHBoxLayout()
         menu_layout.setContentsMargins(100,0,0,0)

@@ -132,7 +132,7 @@ class IconTextWidget(QWidget):
 
         text_label = QLabel(text)
         text_label.setFixedWidth(max_text_width)
-        text_label.setStyleSheet("""
+        """text_label.setStyleSheet(
     QLabel {
         color: white;
         font-size: 12px;
@@ -146,7 +146,7 @@ class IconTextWidget(QWidget):
         );
         border-radius:0px
     }
-""")
+)"""
 
         layout.addWidget(icon_label)
         layout.addWidget(text_label)

@@ -1,29 +1,32 @@
 from PyQt6.QtWidgets import QWidget , QVBoxLayout
 from .toolbar import Toolbar , Navigation , URLTab
-from PyQt6.QtCore import Qt , QUrl
+from PyQt6.QtCore import QUrl
 from PyQt6.QtWebEngineWidgets import QWebEngineView 
-from PyQt6.QtWebEngineCore import QWebEnginePage , QWebEngineProfile
-import os , uuid
+from PyQt6.QtWebEngineCore import QWebEnginePage
+from browser.corebrowser import Browser
 from .coreui import ProgressBar
 
-
+import os
 
 
 class BrowserWindow(QWidget):
     
-    #_shared_profile = None #works as  cache
+    _profile = None #works as  cache
 
     def __init__(self):
         super().__init__()
 
         
-        #self._shared_profile = self._get_profile_data()
-
+        if self._profile is None:
+            self._profile = Browser().profile
         
           
         self.browser = QWebEngineView()
-        #browser.setPage(QWebEnginePage(self._shared_profile, browser))
-        self.browser.setUrl(QUrl('https://google.com'))
+        self.browser.setPage(QWebEnginePage(self._profile, self.browser))
+        #self.browser.setUrl(QUrl('https://google.com'))
+        html_path = os.path.join(os.getcwd(),"ui/index.html")
+        file_url = QUrl.fromLocalFile(html_path)
+        self.browser.setUrl(file_url)
 
 
         progress = ProgressBar() 
@@ -49,16 +52,16 @@ class BrowserWindow(QWidget):
         self.urlbar.urlbox.setText(url.toString())
     
     
-    def _get_profile_data(self): #earlier all shared same profile and persistent storage
-        unique_name = uuid.uuid4().hex
-        profile_path = os.path.join(os.getcwd(),unique_name)
+    """def _create_shared_profile(self): #earlier all shared same profile and persistent storage
+        profile_path = os.path.join(os.getcwd(),"user_data")
         cache_path = os.path.join(os.getcwd(),"user_cache")
         os.makedirs(profile_path, exist_ok=True)
         os.makedirs(cache_path, exist_ok=True)
-        profile = QWebEngineProfile(unique_name)
+        profile = QWebEngineProfile.defaultProfile()    #("user_data")
         profile.setPersistentStoragePath(profile_path)
         profile.setCachePath(cache_path)
+        profile.setHttpCacheType(QWebEngineProfile.HttpCacheType.MemoryHttpCache)
         profile.setPersistentCookiesPolicy(
-            QWebEngineProfile.PersistentCookiesPolicy.ForcePersistentCookies
+            QWebEngineProfile.PersistentCookiesPolicy.AllowPersistentCookies
             )
-        return profile
+        return profile"""

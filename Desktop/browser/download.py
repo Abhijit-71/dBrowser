@@ -1,2 +1,0 @@
-from PyQt6.QtWebEngineCore import QWebEngineDownloadRequest
-from PyQt6.QtWidgets import QFileDialog
