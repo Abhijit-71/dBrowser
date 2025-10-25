@@ -1,8 +1,8 @@
-from PyQt6.QtWidgets import QWidget, QLabel, QHBoxLayout , QLineEdit , QSizePolicy , QSpacerItem
+from PyQt6.QtWidgets import QWidget, QLabel, QHBoxLayout , QLineEdit , QSizePolicy
 from PyQt6.QtWebEngineWidgets import QWebEngineView
-from PyQt6.QtCore import Qt ,QSize,QUrl
-from .coreui import HoverButton , IconButton
-from PyQt6.QtGui import QIcon , QPixmap
+from PyQt6.QtCore import Qt,QUrl
+from .coreui import HoverButton
+from PyQt6.QtGui import  QPixmap
 from urllib.parse import quote_plus
 
 
@@ -51,7 +51,7 @@ class URLTab(QWidget):
         self.urlbox = QLineEdit()
         self.urlbox.setFixedHeight(35)
         self.urlbox.setMinimumWidth(200)
-        self.urlbox.setMaximumWidth(1200)
+        self.urlbox.setMaximumWidth(1000)
         self.urlbox.setPlaceholderText("Search with google or enter url .....")
         line_style = """
             QLineEdit {

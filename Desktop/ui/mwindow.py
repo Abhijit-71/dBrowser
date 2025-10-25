@@ -1,9 +1,8 @@
 from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QWidget, QLabel, QPushButton, QHBoxLayout, QVBoxLayout
+    QMainWindow, QWidget, QLabel, QHBoxLayout, QVBoxLayout
 )
+from PyQt6.QtGui import QIcon
 from PyQt6.QtCore import Qt, QPoint
-from PyQt6.QtGui import  QIcon ,  QPixmap, QResizeEvent
-import sys
 from .coreui import HoverButton
 
 
@@ -69,6 +68,7 @@ class MainWindow(QMainWindow):
     def __init__(self, widget,tab_manager):
         super().__init__()
         self.setWindowTitle('dBrowser')
+        self.setWindowIcon(QIcon('svg/dbrowser_logo.svg'))
         self.setWindowFlags(Qt.WindowType.CustomizeWindowHint)
         self.setMinimumSize(800, 600)
 

@@ -1,19 +1,21 @@
 from PyQt6.QtWidgets import (QWidget, QTabWidget,QVBoxLayout, QHBoxLayout, QTabBar, QLabel)
-#from PyQt6.QtCore import Qt, QSize
 from PyQt6.QtGui import QIcon
 from .browser import BrowserWindow
+from browser.corebrowser import Browser
 
 class TabManager(QWidget):
     def __init__(self):
         super().__init__()
         
-        self.index = 1
+        self.index = 1 #index for tabs
+
+        self.browser_instance = Browser()  #called once for only one profile for each startup 
 
         layout = QVBoxLayout()
         layout.setContentsMargins(0,0,0,0)
         layout.setSpacing(10)
 
-        #Tab manager full 
+        # Tab manager full 
         self.TabBar = QTabWidget()
         self.TabBar.setTabsClosable(True)
         self.TabBar.setMovable(True)
@@ -29,16 +31,16 @@ class TabManager(QWidget):
                 background: transparent;
             }
             QTabBar::tab {
-                background: #47327D;
+                background: #2e2e2e;
                 color: #ffffff;
                 padding: 6px 10px 6px 30px;
                 margin-right: 4px;
-                border-top-left-radius: 4px;
-                border-top-right-radius: 4px;
-                width: 130px;
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
+                width: 150px;
             }
             QTabBar::tab:selected {
-                border:1px solid #8888aa;
+                background:#47327D;
             }
             QTabBar::tab:hover {
                 border:1px solid #b4aaff;
@@ -57,7 +59,7 @@ class TabManager(QWidget):
         self.TabBar.tabBar().setMinimumWidth(200)# type: ignore 
         self.TabBar.tabBar().setMaximumWidth(1920)#type:ignore
         
-        #for the tab changers button
+        # for the tab changers button
         self.container = QWidget(self.TabBar.tabBar())
         h_layout = QHBoxLayout(self.container)
         h_layout.setContentsMargins(0,0,0,0)
@@ -69,9 +71,10 @@ class TabManager(QWidget):
         layout.addWidget(self.TabBar)
         
         self.setLayout(layout)
-
-        #main browserwindow incl. toolbar
-        self.browser_window = BrowserWindow()
+         
+        
+        # main browserwindow incl. toolbar
+        self.browser_window = BrowserWindow(self.browser_instance) #passed profile (which was created once)
         self.browser_window.toolbar.home.clicked.connect(self.add_tab)
         self.TabBar.addTab(self.browser_window,"New Tab")
 
@@ -82,7 +85,7 @@ class TabManager(QWidget):
         
         
     def add_tab(self):
-            tab_content = BrowserWindow()
+            tab_content = BrowserWindow(self.browser_instance) #passed profile (which was created once)
             tab_content.toolbar.home.clicked.connect(self.add_tab)
             index = self.TabBar.addTab(tab_content, f"")
             
@@ -114,7 +117,7 @@ class TabManager(QWidget):
 
          for i in range(self.TabBar.count()):
               if self.TabBar.widget(i) == browser_window:
-                   self.TabBar.tabBar().setTabButton(i, QTabBar.ButtonPosition.LeftSide, IconTextWidget(icon,title,80)) #type:ignore
+                   self.TabBar.tabBar().setTabButton(i, QTabBar.ButtonPosition.LeftSide, IconTextWidget(icon,title,100)) #type:ignore
          
         
 
@@ -146,7 +149,7 @@ class IconTextWidget(QWidget):
         );
         border-radius:0px
     }
-)"""
+)"""     # was for faded , text in title of tabs did not work
 
         layout.addWidget(icon_label)
         layout.addWidget(text_label)

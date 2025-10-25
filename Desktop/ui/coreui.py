@@ -1,6 +1,6 @@
-from PyQt6.QtWidgets import QPushButton ,QProgressBar,QLabel
+from PyQt6.QtWidgets import QPushButton ,QProgressBar
 from PyQt6.QtGui import QIcon
-from PyQt6.QtCore import Qt, QSize
+from PyQt6.QtCore import QSize
 from PyQt6.QtGui import QIcon
 
 class HoverButton(QPushButton):
@@ -42,7 +42,7 @@ class IconButton(QPushButton):
         self.setIcon(QIcon(icon))
         self.setIconSize(QSize(size, size))
         self.setFixedSize(size, size)
-        self.setFlat(True)
+        self.setFlat(True)  # now not used , only for testing buttons with one stste icon
 
         
 

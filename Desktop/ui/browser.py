@@ -3,29 +3,26 @@ from .toolbar import Toolbar , Navigation , URLTab
 from PyQt6.QtCore import QUrl
 from PyQt6.QtWebEngineWidgets import QWebEngineView 
 from PyQt6.QtWebEngineCore import QWebEnginePage
-from browser.corebrowser import Browser
 from .coreui import ProgressBar
-
 import os
 
 
 class BrowserWindow(QWidget):
     
-    _profile = None #works as  cache
+    _profile = None # works as  cache
 
-    def __init__(self):
+    def __init__(self,browser_instance):
         super().__init__()
 
         
         if self._profile is None:
-            self._profile = Browser().profile
+            self._profile = browser_instance.profile  # browser_instance  is Browser class having all profile related configs
         
           
         self.browser = QWebEngineView()
         self.browser.setPage(QWebEnginePage(self._profile, self.browser))
-        #self.browser.setUrl(QUrl('https://google.com'))
-        html_path = os.path.join(os.getcwd(),"ui/index.html")
-        file_url = QUrl.fromLocalFile(html_path)
+        html_path = os.path.join(os.getcwd(),"ui/index.html") # gets location for html file
+        file_url = QUrl.fromLocalFile(html_path) # converts loaction to url
         self.browser.setUrl(file_url)
 
 
@@ -51,17 +48,3 @@ class BrowserWindow(QWidget):
     def update_urlbox(self,url):
         self.urlbar.urlbox.setText(url.toString())
     
-    
-    """def _create_shared_profile(self): #earlier all shared same profile and persistent storage
-        profile_path = os.path.join(os.getcwd(),"user_data")
-        cache_path = os.path.join(os.getcwd(),"user_cache")
-        os.makedirs(profile_path, exist_ok=True)
-        os.makedirs(cache_path, exist_ok=True)
-        profile = QWebEngineProfile.defaultProfile()    #("user_data")
-        profile.setPersistentStoragePath(profile_path)
-        profile.setCachePath(cache_path)
-        profile.setHttpCacheType(QWebEngineProfile.HttpCacheType.MemoryHttpCache)
-        profile.setPersistentCookiesPolicy(
-            QWebEngineProfile.PersistentCookiesPolicy.AllowPersistentCookies
-            )
-        return profile"""
