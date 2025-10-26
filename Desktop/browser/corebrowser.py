@@ -1,14 +1,16 @@
 from PyQt6.QtWebEngineCore import QWebEngineProfile , QWebEngineDownloadRequest 
 from PyQt6.QtWidgets import QFileDialog
+from ui.dropdown import DownloadManager
 import os
 
 class Browser:
 
     _download_handler_connected = False
 
-    def __init__(self):
+    def __init__(self,DownloadManager:DownloadManager):
         super().__init__()
         self.configure()
+        self.download_manager = DownloadManager
     
     def configure(self):
 
@@ -30,7 +32,7 @@ class Browser:
             )
         
 
-        # download is also connected once , for no repeated signal
+        # download is also connected once , for no repeated signal 
 
         if self._download_handler_connected == False:
             self.profile.downloadRequested.connect(self.download_req) #type:ignore
@@ -39,8 +41,8 @@ class Browser:
         
     
 
-    @staticmethod
-    def download_req(download:QWebEngineDownloadRequest):
+    #@staticmethod
+    def download_req(self,download:QWebEngineDownloadRequest):
         
         suggested_name = download.downloadFileName()
     
@@ -53,8 +55,9 @@ class Browser:
         )
 
         if path:
-            download.setDownloadFileName(path)
-            download.accept()
+            download.setDownloadFileName(os.path.basename(path))
+            download.setDownloadDirectory(os.path.dirname(path))
+            self.download_manager.add_download(download)
         else:
             download.cancel()
             print("cancelled")

@@ -4,6 +4,7 @@ from PyQt6.QtCore import Qt,QUrl
 from .coreui import HoverButton
 from PyQt6.QtGui import  QPixmap
 from urllib.parse import quote_plus
+from .dropdown import MenuDrop
 
 
 class Navigation(QWidget):
@@ -97,8 +98,11 @@ class Toolbar(QWidget):
 
         self.home = HoverButton('svg/home_tab.svg','svg/home_tab_pressed.svg','svg/home_tab_pressed.svg', 22)
 
-        self.menu = HoverButton('svg/menu.svg','svg/menu_pressed.svg','svg/menu_pressed.svg', 22)
-        self.download = HoverButton('svg/download.svg','svg/download_pressed.svg','svg/download_pressed.svg', 22)
+        self.menu = HoverButton('svg/menu.svg','svg/menu_pressed.svg','svg/menu_pressed.svg', 24)
+        self.menu.setMenu(MenuDrop()) #menu added
+        self.menu.setStyleSheet("QPushButton::menu-indicator { image: none; }")
+
+        self.download = HoverButton('svg/download.svg','svg/download_pressed.svg','svg/download_pressed.svg', 24)
          
         menu_layout = QHBoxLayout()
         menu_layout.setContentsMargins(100,0,0,0)

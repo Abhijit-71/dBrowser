@@ -2,14 +2,17 @@ from PyQt6.QtWidgets import (QWidget, QTabWidget,QVBoxLayout, QHBoxLayout, QTabB
 from PyQt6.QtGui import QIcon
 from .browser import BrowserWindow
 from browser.corebrowser import Browser
+from .dropdown import DownloadTab , DownloadManager
 
 class TabManager(QWidget):
     def __init__(self):
         super().__init__()
         
         self.index = 1 #index for tabs
-
-        self.browser_instance = Browser()  #called once for only one profile for each startup 
+        
+        self.download_manager = DownloadManager()
+        self.download_tab = DownloadTab(self.download_manager)
+        self.browser_instance = Browser(self.download_manager)  #called once for only one profile for each startup 
 
         layout = QVBoxLayout()
         layout.setContentsMargins(0,0,0,0)
@@ -76,6 +79,7 @@ class TabManager(QWidget):
         # main browserwindow incl. toolbar
         self.browser_window = BrowserWindow(self.browser_instance) #passed profile (which was created once)
         self.browser_window.toolbar.home.clicked.connect(self.add_tab)
+        self.browser_window.toolbar.download.clicked.connect(self.add_download_tab)
         self.TabBar.addTab(self.browser_window,"New Tab")
 
         self.browser_window.browser.titleChanged.connect(lambda title:self.update_title_icon(self.browser_window,title))
@@ -87,6 +91,8 @@ class TabManager(QWidget):
     def add_tab(self):
             tab_content = BrowserWindow(self.browser_instance) #passed profile (which was created once)
             tab_content.toolbar.home.clicked.connect(self.add_tab)
+            tab_content.toolbar.download.clicked.connect(self.add_download_tab)
+
             index = self.TabBar.addTab(tab_content, f"")
             
             self.TabBar.setCurrentIndex(index)
@@ -95,6 +101,12 @@ class TabManager(QWidget):
             tab_content.browser.titleChanged.connect(lambda title:self.update_title_icon(tab_content,title))
             tab_content.browser.iconChanged.connect(lambda icon:self.update_title_icon(tab_content,icon))
              
+    
+    def add_download_tab(self):
+         tab_content = self.download_tab
+         index = self.TabBar.addTab(tab_content, "Downloads")
+         self.TabBar.setCurrentIndex(index)
+         self.index += 1 
 
 
     def close_tab(self, index):
@@ -103,7 +115,7 @@ class TabManager(QWidget):
             return
         self.TabBar.removeTab(index)
         
-        if widget :
+        if widget and widget != self.download_tab :
             widget.deleteLater()
 
 
