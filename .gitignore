@@ -9,5 +9,8 @@ wheels/
 # Virtual environments
 .venv
 
+Output
+src/build/
+src/dist/
 src/user_cache/
 src/user_data/
