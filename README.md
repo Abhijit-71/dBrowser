@@ -1,23 +1,25 @@
 
 
-# dBrowser
+# DiFri Browser
 
 A lightweight **Python browser** built with **PyQt6** and **QWebEngineView**, initialized using **`uv init`** for package management.
-Opens **Google.com** by default and provides basic navigation controls in a clean GUI.
+With a builtin in content filter , blocking certain domains and keywords a clean GUI.
 
 ---
 
 ## 🖥 Features
 
 * Embedded **Chromium-based browser** using **QWebEngineView**
-* Opens **[https://www.google.com](https://www.google.com)** by default
+* Opens **DiFri HomePage** by default
 * Navigation controls:
 
   * Back
   * Forward
   * Reload
 * Address bar for custom URLs
-* Lightweight and cross-platform (Windows, macOS, Linux)
+* Download Manager
+* Content filter , sfae for kids and schools
+* Lightweight and cross-platform (Windows, macOS, Linux) if compiled properly.
 * Easy to extend with additional PyQt6 widgets or custom styling
 
 ---
@@ -36,8 +38,8 @@ Opens **Google.com** by default and provides basic navigation controls in a clea
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/Abhijit-71/dBrowser.git
-cd dBrowser
+git clone https://github.com/Abhijit-71/DiFri.git
+cd DiFri
 ```
 
 2. Initialize the environment and manage packages with **UV**:
@@ -55,14 +57,17 @@ cd Desktop
 ..\.venv\Scripts\activate.ps1
 uv run main.py
 ```
-
+---
+## For Exclusive Platform Development
+* Checkout Desktop and Andriod branches
+* They just provide all req. and code for specific platform 
 ---
 
 ## 📝 Usage
 
 * Enter a URL in the **address bar** and press **Enter** to navigate
 * Use **Back**, **Forward**, and **Reload** buttons to control navigation
-* The browser starts on **Google.com** by default
+* The browser starts on **DiFri HomePage** by default
 
 ---
 
@@ -70,10 +75,10 @@ uv run main.py
 
 * **Python version:** Ensure compatibility with PyQt6 (usually Python 3.8–3.12, depending on PyQt6 release)
 * You can extend the browser to:
-
+* Current Features
   * Multiple tabs
   * Custom menus or toolbar actions
-  * JavaScript / Python communication via QWebChannel
+  * Download Manager
   * Cookie and network management
 
 ---
