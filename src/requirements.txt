@@ -1,0 +1,23 @@
+asyncgui==0.6.3
+asynckivy==0.6.4
+certifi==2025.10.5
+charset-normalizer==3.4.4
+docutils==0.22.2
+filetype==1.2.0
+idna==3.11
+Kivy==2.3.1
+kivy-deps.angle==0.4.0
+kivy-deps.glew==0.3.1
+Kivy-Garden==0.1.5
+kivy_deps.sdl2==0.8.0
+kivymd @ https://github.com/kivymd/KivyMD/archive/master.zip
+materialshapes==0.3
+materialyoucolor==2.0.10
+pillow==10.4.0
+pycairo==1.28.0
+Pygments==2.19.2
+pyjnius==1.7.0
+pypiwin32==223
+pywin32==311
+requests==2.32.5
+urllib3==2.5.0
