@@ -5,6 +5,7 @@ from .coreui import HoverButton
 from PyQt6.QtGui import  QPixmap
 from urllib.parse import quote_plus
 from .dropdown import MenuDrop
+from core.utils import resource_path
 
 
 class Navigation(QWidget):
@@ -42,7 +43,7 @@ class URLTab(QWidget):
         layout.addStretch()
 
         self.sengine = QLabel()
-        self.sengine.setPixmap(QPixmap('svg/google_logo.svg'))
+        self.sengine.setPixmap(QPixmap(resource_path('svg/google_logo.svg')))
         self.sengine.setFixedSize(30,30)
         self.sengine.setScaledContents(True)
         self.sengine.setStyleSheet("background: transparent;")
@@ -79,9 +80,13 @@ class URLTab(QWidget):
         self.browser = browser
         self.urlbox.returnPressed.connect(lambda: self.change_src(self.urlbox.text()))
 
+
     def change_src(self,src:str):
-        if src.startswith('https://') or src.startswith('http://'):
-            self.browser.setUrl(QUrl(src))
+        if '.' in src and ' ' not in src:
+            if src.startswith('https://') or src.startswith('http://'):
+                self.browser.setUrl(QUrl(src))
+            else:
+                self.browser.setUrl(QUrl('https://'+src))
         else:
             query = quote_plus(src)
             url = f"https://www.google.com/search?q={query}"

@@ -2,30 +2,35 @@ from PyQt6.QtWidgets import QWidget , QVBoxLayout
 from .toolbar import Toolbar , Navigation , URLTab
 from PyQt6.QtCore import QUrl
 from PyQt6.QtWebEngineWidgets import QWebEngineView 
-from PyQt6.QtWebEngineCore import QWebEnginePage
 from .coreui import ProgressBar
 from browser.filter import FilterPage
+from core.utils import resource_path
 import os
 
+
+# ================= Instance management are crucial !!!! ======================
 
 class BrowserWindow(QWidget):
     
     _profile = None # works as  cache
 
-    def __init__(self,browser_instance):
+    def __init__(self,browser_instance,tabmanager=None):
+
         super().__init__()
 
         
         if self._profile is None:
             self._profile = browser_instance.profile  # browser_instance  is Browser class having all profile related configs
         
-          
+        self.tab_manager = tabmanager
         self.browser = QWebEngineView()
         self.filtered_page = FilterPage(self._profile, self.browser)
         self.browser.setPage(self.filtered_page)
-        html_path = os.path.join(os.getcwd(),"ui/index.html") # gets location for html file
+        html_path = resource_path("ui/index.html") # gets location for html file
         file_url = QUrl.fromLocalFile(html_path) # converts loaction to url
         self.browser.setUrl(file_url)
+
+        self.browser.createWindow = self.create_window  #type:ignore
 
 
         progress = ProgressBar() 
@@ -50,3 +55,6 @@ class BrowserWindow(QWidget):
     def update_urlbox(self,url):
         self.urlbar.urlbox.setText(url.toString())
     
+    def create_window(self, window_type):
+        new_tab = self.tab_manager.add_tab() if self.tab_manager else None
+        return new_tab.browser if new_tab else None

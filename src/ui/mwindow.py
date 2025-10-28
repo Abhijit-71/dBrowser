@@ -4,6 +4,8 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtGui import QIcon
 from PyQt6.QtCore import Qt, QPoint
 from .coreui import HoverButton
+from core.utils import resource_path
+
 
 
 
@@ -12,14 +14,13 @@ class CustomTitleBar(QWidget):
         super().__init__(parent)
         self.parent = parent # type: ignore
         self.setFixedHeight(height)
-        #self.setStyleSheet(f"background-color: {color}; color: white;")
 
         layout = QHBoxLayout(self)
         layout.setContentsMargins(padding, 5, padding, 5)
         layout.setSpacing(5)
 
         # Title label
-        self.title = QLabel("dBrowser")
+        self.title = QLabel("DiFri")
         self.title.setStyleSheet("background: transparent;font-weight: bold;")
         layout.addWidget(self.title)
         layout.addStretch()
@@ -68,7 +69,7 @@ class MainWindow(QMainWindow):
     def __init__(self, widget,tab_manager):
         super().__init__()
         self.setWindowTitle('DiFri')
-        self.setWindowIcon(QIcon('svg/logo.svg'))
+        self.setWindowIcon(QIcon(resource_path('svg/dbrowser_logo.svg')))
         self.setWindowFlags(Qt.WindowType.CustomizeWindowHint)
         self.setMinimumSize(800, 600)
 
@@ -84,18 +85,7 @@ class MainWindow(QMainWindow):
         layout.addWidget(widget)
         
         self.setCentralWidget(central)
-    
-    """def resizeEvent(self,event):
-        super().resizeEvent(event)
 
-        # Check if window is maximized
-        if self.windowState() & Qt.WindowState.WindowMaximized:
-            if not self.was_maximized:
-                self.was_maximized = True
-                print(self.TabBar.width())
-                self.TabBar.TabBar.tabBar().setFixedWidth(200)  # call your function
-        else:
-            self.was_maximized = False""" #calling resize event to adjust width 
 
 class PaddedWindow(QWidget):
     def __init__(self, widget, color):
@@ -106,9 +96,7 @@ class PaddedWindow(QWidget):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(10, 5, 10, 10)
         layout.setSpacing(0)
-        
-        #layout.addWidget(tab)
-        #layout.addWidget(navbar)
+
         layout.addWidget(widget)
         
         

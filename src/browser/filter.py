@@ -19,7 +19,7 @@ KEYWORDS = [
     "voyeur", "pornography", "pussy", "cumshot", "cock","suck", "buttplug", "dildo", "vibrator", "sex fantasy", "lube", "condom", "dirty talk", "pillow humping","tease", "striptease", "sexting", "dominant", "submissive", "anal play", 
     "slut", "whore", "bimbo", "horny", "sex tape leak", "sex scandal", "erotic roleplay","squirt","creampie","camel toe"
     "adult dating", "sexual harassment", "seduction", "flirting", "sex ad", "adult games", "porn blog", 
-    "sexual content", "adult entertainment", "adult clips", "hardcore porn", "adult videos", "explicit","desi","mms","boobs", "naked","spank","gilf","hot girl","hot women","hot model","teen porn","girl showing","bikini","panty","bra"
+    "sexual content", "adult entertainment", "adult clips", "hardcore porn", "adult videos", "explicit","desi","mms","boobs", "naked","spank","gilf","hot girl","hot women","hot model","teen porn","girl showing","bikini","panty","bra","xx"
 ]
 
 BLOCKED_DOMAINS = [
@@ -35,11 +35,13 @@ BLOCKED_DOMAINS = [
 ]
 
 
+
 def registered_domain(hostname: str) -> str | None:
     if not hostname:
         return None
     parts = hostname.split('.')
     return '.'.join(parts[-2:]) if len(parts) >= 2 else hostname
+
 
 class FilterPage(QWebEnginePage):
     def acceptNavigationRequest(self, url: QUrl, nav_type, isMainFrame: bool):
@@ -52,14 +54,14 @@ class FilterPage(QWebEnginePage):
         qs = parse_qs(parsed.query)
         search_term = qs.get("q", [""])[0].lower()
 
-        print(f"→ Navigating to {domain}, search={search_term!r}", flush=True)
+        #print(f"→ Navigating to {domain}, search={search_term!r}", flush=True)
 
-        # Block full domains
+
         if domain in BLOCKED_DOMAINS or any(k in str(domain) for k in KEYWORDS):
             self.setHtml(f"<h2>Blocked</h2><p>{domain} is restricted.</p>")
             return False
 
-        # Block search terms (Google, Bing, etc.)
+
         if domain in ("google.com", "bing.com", "duckduckgo.com", "yahoo.com","brave.com"):
             if any(k in search_term for k in KEYWORDS):
                 self.setHtml("<h2>Blocked Search</h2><p>Search contains blocked keywords.</p>")

@@ -5,6 +5,9 @@ from PyQt6.QtWidgets import (QMenu , QWidget , QVBoxLayout, QLabel , QHBoxLayout
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QIcon,QAction
 from PyQt6.QtWebEngineCore import QWebEngineDownloadRequest
+#from core.utils import resource_path
+
+
 
 class DownloadTab(QWidget):
     def __init__(self,DownloadManager):
@@ -39,12 +42,16 @@ class DownloadTab(QWidget):
 
 
 class DownloadManager(QWidget):
+
+
     def __init__(self):
         super().__init__()
         self.downloads = []
         self.init_ui()
 
+
     def init_ui(self):
+
         layout = QVBoxLayout()
         layout.setContentsMargins(10,10,10,10)
         layout.setSpacing(20)
@@ -53,7 +60,6 @@ class DownloadManager(QWidget):
         self.table = QTableWidget(0, 4)
         self.table.setHorizontalHeaderLabels(["File","Progress","Status", "Actions"])
         self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Stretch) #type:ignore
-
         self.table.verticalHeader().setDefaultSectionSize(80) #type:ignore
         self.table.verticalHeader().setVisible(False) #type:ignore
         
@@ -108,7 +114,9 @@ class DownloadManager(QWidget):
 
         self.setLayout(layout)
 
+
     def add_download(self, download:QWebEngineDownloadRequest):
+
         filename = download.downloadFileName()
         row = 0
         self.table.insertRow(row)
@@ -132,6 +140,7 @@ class DownloadManager(QWidget):
             progress_label = QTableWidgetItem(f"{(download.receivedBytes())/1024**2:.1f} MB/{(download.totalBytes())/1024**2:.1f} MB")
             progress_label.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
             self.table.setItem(row,1,progress_label)
+
         # Status
         status_item = QTableWidgetItem("Starting...")
         status_item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -211,9 +220,7 @@ class DownloadManager(QWidget):
             pass
 
 
-
     def toggle_pause(self, download: QWebEngineDownloadRequest, button: QPushButton):
-        # toggle and update button text
         if button.text() == "Pause":
             download.pause()
             button.setText("Resume")
@@ -245,7 +252,7 @@ class DownloadManager(QWidget):
         elif download.state() == download.DownloadState.DownloadInterrupted:
             self.recent_list.insertItem(0,QListWidgetItem(f"{filename} - Failed ❌"))
         elif download.state() == download.DownloadState.DownloadCancelled:
-            self.recent_list.insertItem(0,QListWidgetItem(f"{filename} - Cancelled ⏹"))
+            self.recent_list.insertItem(0,QListWidgetItem(f"{filename} - Cancelled"))
 
 #https://www.thinkbroadband.com/download   === test url
 
@@ -254,7 +261,9 @@ class MenuDrop(QMenu):
     def __init__(self):
         super().__init__()
 
-        add_tab = QAction(QIcon("svg/home_tab.svg"),"Add New Tab",self)
+        #do include resource_path if icons required
+
+        add_tab = QAction(QIcon(("svg/home_tab.svg")),"Add New Tab",self)
         #add_tab.setStatusTip("Add New Tab")
         add_tab.setShortcut('Ctrl+T')
         self.addAction(add_tab)
@@ -265,12 +274,12 @@ class MenuDrop(QMenu):
         self.addAction(QIcon("svg/logo.svg"),"History")
         self.addSeparator()
         
-        print = QAction(QIcon("svg/home_tab.svg"),"Print",self)
+        print = QAction(QIcon(("svg/home_tab.svg")),"Print",self)
         #print.setStatusTip("Print this page")
         print.setShortcut('Ctrl+P')
         self.addAction(print)
 
-        save = QAction(QIcon("svg/home_tab.svg"),"Save Page As",self)
+        save = QAction(QIcon(("svg/home_tab.svg")),"Save Page As",self)
         #save.setStatusTip("Save this page")
         save.setShortcut('Ctrl+S')
         self.addAction(save)
@@ -280,7 +289,7 @@ class MenuDrop(QMenu):
         self.addAction(QIcon("svg/logo.svg"),"Help")
         self.addSeparator()
         
-        exit = QAction(QIcon("svg/home_tab.svg"),"Exit",self)
+        exit = QAction(QIcon(("svg/home_tab.svg")),"Exit",self)
         #exit.setStatusTip("Add New Tab")
         exit.setShortcut('Alt+F4')
         self.addAction(exit)

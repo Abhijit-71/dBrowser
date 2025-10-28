@@ -40,17 +40,15 @@ class Browser:
 
         
     
-
-    #@staticmethod
     def download_req(self,download:QWebEngineDownloadRequest):
         
         suggested_name = download.downloadFileName()
     
-        print(f"trigerred {suggested_name}")
+        #print(f"trigerred {suggested_name}")
 
         path,_ = QFileDialog.getSaveFileName(
             None,
-            "dBrowser Download Manager",
+            "DiFri Download Manager",
             suggested_name,
         )
 
@@ -60,6 +58,5 @@ class Browser:
             self.download_manager.add_download(download)
         else:
             download.cancel()
-            print("cancelled")
     
 

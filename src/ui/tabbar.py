@@ -3,6 +3,7 @@ from PyQt6.QtGui import QIcon
 from .browser import BrowserWindow
 from browser.corebrowser import Browser
 from .dropdown import DownloadTab , DownloadManager
+from core.utils import resource_path
 
 class TabManager(QWidget):
     def __init__(self):
@@ -27,8 +28,7 @@ class TabManager(QWidget):
         self.TabBar.setStyleSheet("""
             QTabWidget::pane {
                 border: none;
-                background: transparent;
-                
+                background: transparent;    
             }
             QTabBar {
                 background: transparent;
@@ -51,12 +51,16 @@ class TabManager(QWidget):
             QTabBar::tab:selected:hover {
                 border:1px solid #d6c8ff;
             }
-            QTabBar::close-button {
-                image: url("svg/cross.svg");
+            
+        """)
+        close_icon = resource_path("svg/cross.svg").replace("\\", "/")
+        self.TabBar.setStyleSheet(self.TabBar.styleSheet()+f"""
+            QTabBar::close-button {{
+                image: url({close_icon});
                 subcontrol-position: right;
                 width: 16px;
                 height: 16px;
-            }
+            }}
         """)
 
         self.TabBar.tabBar().setMinimumWidth(200)# type: ignore 
@@ -77,7 +81,7 @@ class TabManager(QWidget):
          
         
         # main browserwindow incl. toolbar
-        self.browser_window = BrowserWindow(self.browser_instance) #passed profile (which was created once)
+        self.browser_window = BrowserWindow(self.browser_instance,self) #passed profile (which was created once)
         self.browser_window.toolbar.home.clicked.connect(self.add_tab)
         self.browser_window.toolbar.download.clicked.connect(self.add_download_tab)
         self.TabBar.addTab(self.browser_window,"New Tab")
@@ -88,8 +92,8 @@ class TabManager(QWidget):
         self.TabBar.tabCloseRequested.connect(self.close_tab)
         
         
-    def add_tab(self):
-            tab_content = BrowserWindow(self.browser_instance) #passed profile (which was created once)
+    def add_tab(self,url=None):
+            tab_content = BrowserWindow(self.browser_instance,self) #passed profile (which was created once)
             tab_content.toolbar.home.clicked.connect(self.add_tab)
             tab_content.toolbar.download.clicked.connect(self.add_download_tab)
 
@@ -100,6 +104,13 @@ class TabManager(QWidget):
             
             tab_content.browser.titleChanged.connect(lambda title:self.update_title_icon(tab_content,title))
             tab_content.browser.iconChanged.connect(lambda icon:self.update_title_icon(tab_content,icon))
+
+            if url:
+                 from PyQt6.QtCore import QUrl
+                 tab_content.browser.setUrl(QUrl(url))
+                 
+            
+            return tab_content
              
     
     def add_download_tab(self):
@@ -121,6 +132,7 @@ class TabManager(QWidget):
 
 
     def update_title_icon(self,browser_window:BrowserWindow,icon=None,title=None):
+         
          if icon is None:
               icon = browser_window.browser.icon()
         
