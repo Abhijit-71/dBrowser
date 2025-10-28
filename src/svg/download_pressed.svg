@@ -1,0 +1,13 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="800" height="800">
+	<style>
+		.s0 { fill: none;stroke: #ff8c00;stroke-linecap: round;stroke-linejoin: round;stroke-width: 50 } 
+	</style>
+	<g id="SVGRepo_bgCarrier">
+	</g>
+	<g id="SVGRepo_tracerCarrier">
+	</g>
+	<g id="SVGRepo_iconCarrier">
+		<path class="s0" d="m400 100v433.33m0 0l133.33-145.83m-133.33 145.83l-133.33-145.83"/>
+		<path class="s0" d="m500 700h-200c-94.28 0-141.42 0-170.71-29.29-29.29-29.29-29.29-76.43-29.29-170.71m600 0c0 94.28 0 141.42-29.29 170.71-9.99 9.99-22.06 16.58-37.38 20.91"/>
+	</g>
+</svg>
