@@ -19,7 +19,7 @@ class CustomTitleBar(QWidget):
         layout.setSpacing(5)
 
         # Title label
-        self.title = QLabel("dBrowser")
+        self.title = QLabel("DiFri")
         self.title.setStyleSheet("background: transparent;font-weight: bold;")
         layout.addWidget(self.title)
         layout.addStretch()
@@ -67,8 +67,8 @@ class CustomTitleBar(QWidget):
 class MainWindow(QMainWindow):
     def __init__(self, widget,tab_manager):
         super().__init__()
-        self.setWindowTitle('dBrowser')
-        self.setWindowIcon(QIcon('svg/dbrowser_logo.svg'))
+        self.setWindowTitle('DiFri')
+        self.setWindowIcon(QIcon('svg/logo.svg'))
         self.setWindowFlags(Qt.WindowType.CustomizeWindowHint)
         self.setMinimumSize(800, 600)
 

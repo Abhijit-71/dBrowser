@@ -128,10 +128,10 @@ class DownloadManager(QWidget):
         self.table.setCellWidget(row, 0, details)   
 
         
-
-        progress_label = QTableWidgetItem(f"{(download.receivedBytes())/1024**2:.1f} MB/{(download.totalBytes())/1024**2:.1f} MB")
-        progress_label.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.table.setItem(row,1,progress_label)
+        if download.totalBytes() != 0:
+            progress_label = QTableWidgetItem(f"{(download.receivedBytes())/1024**2:.1f} MB/{(download.totalBytes())/1024**2:.1f} MB")
+            progress_label.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+            self.table.setItem(row,1,progress_label)
         # Status
         status_item = QTableWidgetItem("Starting...")
         status_item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -189,7 +189,8 @@ class DownloadManager(QWidget):
         
 
         # Connect signals
-        download.receivedBytesChanged.connect(lambda: self.update_progress(download, progress_bar,progress_label))
+        if download.totalBytes() != 0:
+            download.receivedBytesChanged.connect(lambda: self.update_progress(download, progress_bar,progress_label))
         download.stateChanged.connect(lambda: self.update_status(download, status_item, pause_btn))
         download.isFinishedChanged.connect(lambda: self.finish_download(download, filename))
 
@@ -202,10 +203,12 @@ class DownloadManager(QWidget):
         
         
     def update_progress(self,download:QWebEngineDownloadRequest,progress_bar:QProgressBar,progress_label):
-        print(download.receivedBytes())
-        progress = (download.receivedBytes()/download.totalBytes())*100
-        progress_bar.setValue(int(progress))
-        progress_label.setText(f"{(download.receivedBytes())/1024**2:.1f} MB/{(download.totalBytes())/1024**2:.1f} MB")
+        if download.totalBytes() != 0:
+            progress = (download.receivedBytes()/download.totalBytes())*100
+            progress_bar.setValue(int(progress))
+            progress_label.setText(f"{(download.receivedBytes())/1024**2:.1f} MB/{(download.totalBytes())/1024**2:.1f} MB")
+        else:
+            pass
 
 
 

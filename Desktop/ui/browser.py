@@ -4,6 +4,7 @@ from PyQt6.QtCore import QUrl
 from PyQt6.QtWebEngineWidgets import QWebEngineView 
 from PyQt6.QtWebEngineCore import QWebEnginePage
 from .coreui import ProgressBar
+from browser.filter import FilterPage
 import os
 
 
@@ -20,7 +21,8 @@ class BrowserWindow(QWidget):
         
           
         self.browser = QWebEngineView()
-        self.browser.setPage(QWebEnginePage(self._profile, self.browser))
+        self.filtered_page = FilterPage(self._profile, self.browser)
+        self.browser.setPage(self.filtered_page)
         html_path = os.path.join(os.getcwd(),"ui/index.html") # gets location for html file
         file_url = QUrl.fromLocalFile(html_path) # converts loaction to url
         self.browser.setUrl(file_url)

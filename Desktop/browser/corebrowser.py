@@ -31,7 +31,7 @@ class Browser:
             QWebEngineProfile.PersistentCookiesPolicy.AllowPersistentCookies
             )
         
-
+        
         # download is also connected once , for no repeated signal 
 
         if self._download_handler_connected == False:
