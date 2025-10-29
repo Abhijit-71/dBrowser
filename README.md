@@ -1,6 +1,9 @@
 
 
 # DiFri Browser
+![Project logo](Desktop/svg/dbrowser_logo.svg)
+
+
 
 A lightweight **Python browser** built with **PyQt6** and **QWebEngineView**, initialized using **`uv init`** for package management.
 With a builtin in content filter , blocking certain domains and keywords a clean GUI.
@@ -26,9 +29,11 @@ With a builtin in content filter , blocking certain domains and keywords a clean
 
 ## Demo of Browser
 
-![Alt text](Demo/image-1.png)
-![Alt text](Demo/image-2.png)
+![Alt text](Demo/img-1.png)
+![Alt text](Demo/img-2.png)
+![Alt text](Demo/img-3.png)
 ===============================
+* Demo of testing phase
 ![Alt text](Demo/demo-gif.gif)
 
 
