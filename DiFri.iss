@@ -13,7 +13,8 @@ AppPublisher=Abhijit-71
 AppPublisherURL=https://www.github.com/Abhijit-71/DiFri
 AppSupportURL=https://www.github.com/Abhijit-71/DiFri
 AppUpdatesURL=https://www.github.com/Abhijit-71/DiFri
-DefaultDirName={autopf}\DiFri
+DefaultDirName=C:\Users\Public\DiFri
+PrivilegesRequired=lowest
 UninstallDisplayIcon={app}\DiFri.exe
 ; "ArchitecturesAllowed=x64compatible" specifies that Setup cannot run
 ; on anything but x64 and Windows 11 on Arm.
